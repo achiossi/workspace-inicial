@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginLink = document.getElementById("loginLink");
   const estaLogueado = localStorage.getItem("logueado") === "true";
   if (estaLogueado) {
-      loginLink.innerHTML = "Logout";
+      loginLink.innerHTML = "Cerrar sesión";
       loginLink.addEventListener("click", () => {
           logout();
       });
@@ -71,4 +71,63 @@ function DirigirALogin(){
 document.addEventListener("DOMContentLoaded", function(){
   var nameLogueado = localStorage.getItem('nombreLogueado');
   document.getElementById("nombreLogin").innerHTML=nameLogueado
+});
+
+document.getElementById("cerrarSesionDesplegable").addEventListener("click", () => {
+  logout();
+});
+
+function cambiarModo() {
+  const modoActual = localStorage.getItem("modo-preferido");
+  const toggleButton = document.getElementById("toggleButton");
+  const toggleIcon = document.getElementById("toggleButtonIcon");
+  const toggleText = document.getElementById("toggleButtonText");
+
+  if (modoActual === "modo-noche") {
+    localStorage.setItem("modo-preferido", "modo-dia");
+    document.body.classList.remove("modo-noche");
+    toggleIcon.classList.remove("fa-moon");
+    toggleIcon.classList.add("fa-sun");
+    toggleText.textContent = "Modo dia";
+    toggleButton.classList.remove("btn-dark");
+    toggleButton.classList.add("btn-light");
+    toggleButton.style.backgroundColor = '';
+    toggleButton.style.border = '1px solid gray';
+  } else {
+    localStorage.setItem("modo-preferido", "modo-noche");
+    document.body.classList.add("modo-noche");
+    toggleIcon.classList.remove("fa-sun");
+    toggleIcon.classList.add("fa-moon");
+    toggleText.textContent = "Modo noche";
+    toggleButton.classList.remove("btn-light");
+    toggleButton.classList.add("btn-dark");
+    toggleButton.style.backgroundColor = "#2C2E30";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const modoActual = localStorage.getItem("modo-preferido");
+  const toggleButton = document.getElementById("toggleButton");
+  const toggleIcon = document.getElementById("toggleButtonIcon");
+  const toggleText = document.getElementById("toggleButtonText");
+
+  if (modoActual === "modo-noche") {
+    document.body.classList.add("modo-noche");
+    toggleIcon.classList.add("fa-moon");
+    toggleText.textContent = "Modo noche";
+    toggleButton.classList.remove("btn-light");
+    toggleButton.classList.add("btn-dark");
+    toggleButton.style.backgroundColor = "#2C2E30";
+    toggleButton.style.border = '1px solid gray';
+  } else {
+    toggleText.textContent = "Modo dia";
+    toggleIcon.classList.add("fa-sun");
+    toggleButton.classList.remove("btn-dark");
+    toggleButton.classList.add("btn-light");
+    toggleButton.style.border = '1px solid gray';
+  }
+
+  toggleButton.addEventListener("click", () => {
+    cambiarModo();
+  });
 });

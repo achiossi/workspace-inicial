@@ -1,3 +1,13 @@
+const divProducto = document.createElement("div");
+const containerProducto = document.getElementById("products-info");
+   
+addEventListener("DOMContentLoaded", () => {
+    main_comment.insertBefore(btndiv, Comment_div)
+     btndiv.appendChild(cartbtn)
+ })
+    
+let product;
+
 document.addEventListener("DOMContentLoaded", function () {
     const idProducto = localStorage.getItem("productoSeleccionado");
     if (idProducto) {
@@ -5,35 +15,35 @@ document.addEventListener("DOMContentLoaded", function () {
         getJSONData(urlProductsInfo)
             .then(response => {
                 if (response.status === "ok") {
-                    const product = response.data;
-                    const containerProducto = document.getElementById("products-info");
-                    containerProducto.innerHTML = "";
-
-                    const divProducto = document.createElement("div");
+                    product = response.data;
+                    
                     divProducto.innerHTML = `
-                    <div class="row">
-                        <div class="col-12">
-                            <h4 class="mb-5 mt-4">${product.name}</h4>
-                            <hr>
-                            <div class="row">
-                                <div class="row col-6">
-                                    <p><strong>Precio:</strong><br>${product.currency} ${product.cost}</p>
-                                    <p><strong>Descripción:</strong><br>${product.description}</p>
-                                    <p><strong>Categoria:</strong><br>${product.category}</p>
-                                    <p><strong>Cantidad vendida:</strong><br>${product.soldCount}</p>
-                                </div>
-                                <div class="col-6">
-                                    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="mb-4 mt-4">${product.name}</h4>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Precio:</strong><br>${product.currency} ${product.cost}</p>
+                                        <p><strong>Descripción:</strong><br>${product.description}</p>
+                                        <p><strong>Categoria:</strong><br>${product.category}</p>
+                                        <p><strong>Cantidad vendida:</strong><br>${product.soldCount}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <!-- Aquí debes agregar las imágenes del carrusel -->
+                                            </div>
+                                            <a class="carousel-control-prev" href="#imageCarousel" role="button" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Anterior</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#imageCarousel" role="button" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Siguiente</span>
+                                            </a>
                                         </div>
-                                        <a class="carousel-control-prev" href="#imageCarousel" role="button" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Anterior</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#imageCarousel" role="button" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Siguiente</span>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +100,7 @@ function loadComment() {
                     <table id="comentarios" class="table table-hover table-striped">
                         <thead>
                             <tr class="container">
-                                <th class="col-1 text-left"></th>
+                                <th class="col-1 text-left d-none"></th>
                                 <th class="col-2 text-left">Usuario</th>
                                 <th class="col-3 text-left">Descripción</th>
                                 <th class="col-3 text-center">Puntuación</th>

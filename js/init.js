@@ -131,3 +131,57 @@ document.addEventListener("DOMContentLoaded", function () {
     cambiarModo();
   });
 });
+
+let cartbtn = document.createElement("button");
+let cartbtntext = document.createTextNode(" Comprar ");
+cartbtn.appendChild(cartbtntext);
+cartbtn.classList.add("btn");
+cartbtn.classList.add("btn-success");
+
+let btndiv = document.createElement("div");
+btndiv.classList.add("col-12");
+btndiv.classList.add("text-center");
+btndiv.classList.add("btn-hover");
+
+const carthtml = "cart.html";
+let productcart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function mostrarMensajeEnAlerta(mensaje, tipo, duracion) {
+  const alertDiv = document.getElementById('alertMessage');
+  alertDiv.textContent = mensaje;
+  alertDiv.classList.remove('alert-primary', 'alert-success', 'alert-info', 'alert-warning', 'alert-danger');
+  alertDiv.classList.add(`alert-${tipo}`);
+  alertDiv.style.display = 'block';
+  setTimeout(() => {
+    alertDiv.style.display = 'none';
+  }, duracion);
+}
+
+cartbtn.addEventListener("click", () => {
+  const productcart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  if (isProductInCart(product)) {
+    mostrarMensajeEnAlerta("Este producto ya está en el carrito.", "warning", 2000);
+  } else {
+    productcart.push(product);
+    localStorage.setItem('cart', JSON.stringify(productcart));
+    mostrarMensajeEnAlerta("Agregando al Carrito", "success", 2000);
+    console.log(productcart);
+    setTimeout(() => {
+      window.location.href = carthtml;
+    }, 2000);
+  }
+});
+function isProductInCart(product) {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const productId = product.id;
+
+  for (const item of cart) {
+    if (item.id === productId) {
+      return true; 
+    }
+  }
+
+  return false; 
+}
+

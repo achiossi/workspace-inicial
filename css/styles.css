@@ -294,7 +294,7 @@ body.modo-noche .form-check-input[type="checkbox"] {
 body.modo-noche #loginContainer {
   background-color: #2C2E30;
   color: #fff;
-  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);/
 }
 
 body.modo-noche .btn-dark {
@@ -568,4 +568,35 @@ tr {
 
 .modo-noche td {
   color: white;
+}
+
+.bg-gris {
+  background-color: hwb(0 78% 21% / 0.986);
+}
+
+body.modo-noche #formadepago .modal-content {
+  background-color: #2C2E30;
+  color: #fff;
+}
+
+body.modo-noche #formadepago label {
+  color: #fff;
+}
+
+body.modo-noche #formadepago hr {
+  border-color: #fff;
+}
+
+.container.product p {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.is-valid {
+  border-color: #28a745; 
+}
+
+
+.is-invalid {
+  border-color: #dc3545;
 }

@@ -1,3 +1,4 @@
+//funcionalidad para hacer el registro o ingreso a la página según ya estés registrado o no. Chequeo de requerimientos para la contraseña, usuario y datos necesarios.
 document.addEventListener("DOMContentLoaded", function () {
     const switchLoginRegistro = document.getElementById("switchLoginRegistro");
     const accesoForm = document.querySelector(".acceso");
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   
     const btnAcceder = document.getElementById("btnAcceder");
-  
+  //Funcionalidad al acceder desde el evento click, chequeo de requerimientos obligatorios
     btnAcceder.addEventListener("click", () => {
       const username = document.getElementById("usernameLogin").value;
       const password = document.getElementById("contraseñaLogin").value;
@@ -117,14 +118,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   
     function loginSuccess() {
-      // Ocultar el botón y mostrar el spinner
       document.getElementById("btnAcceder").classList.add("d-none");
       document.getElementById("spinner").classList.remove("d-none");
     
       showNotification("Acceso correcto.", "success");
       localStorage.setItem("logueado", "true");
       localStorage.setItem("nombreLogueado", usernameLogin.value);
-    
+      
+      const userData = {
+        primerNombre: "",
+        segundoNombre: "",
+        primerApellido: "",
+        segundoApellido: "",
+        email: usernameLogin.value,
+        telefono: "",
+      };
+
+      localStorage.setItem("userData", JSON.stringify(userData));
       setTimeout(() => {
         window.location.href = "index.html";
       }, 2500);

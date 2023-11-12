@@ -40,7 +40,7 @@ let getJSONData = function(url){
     });
 }
 
-
+//Al cargar la página se verifica si el usuario está logueado y almacenado en la localstorage
 document.addEventListener("DOMContentLoaded", () => {
   const loginLink = document.getElementById("loginLink");
   const estaLogueado = localStorage.getItem("logueado") === "true";
@@ -53,10 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
       loginLink.innerHTML = "Login";
   }
 });
-
+//Función para cerrar sesión y borrar los datos de la localStorage
 function logout() {
   localStorage.removeItem("logueado");
   localStorage.removeItem("nombreLogueado");
+  localStorage.removeItem("userData");
   window.location.href = "login.html";
 }
 
@@ -67,16 +68,24 @@ function DirigirALogin(){
       window.location.href = 'login.html';
   }
 }
-
+//se cargan los datos del usuario al cargar la página, desde la localStorage
 document.addEventListener("DOMContentLoaded", function(){
-  var nameLogueado = localStorage.getItem('nombreLogueado');
-  document.getElementById("nombreLogin").innerHTML=nameLogueado
+  const userDataJSON = localStorage.getItem("userData");
+
+  if (userDataJSON) {
+    const userData = JSON.parse(userDataJSON);
+    const email = userData.email;
+
+    if (email) {
+      document.getElementById("nombreLogin").innerHTML = email;
+    }
+  }
 });
 
 document.getElementById("cerrarSesionDesplegable").addEventListener("click", () => {
   logout();
 });
-
+//función para cambiar el aspecto modo día-noche, verificando qué está guardado en la localStorage
 function cambiarModo() {
   const modoActual = localStorage.getItem("modo-preferido");
   const toggleButton = document.getElementById("toggleButton");
@@ -131,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
     cambiarModo();
   });
 });
-
+//funcionalidad del carrito, qué elementos están en el carrito de compras. Estilos con bootstrap
 let cartbtn = document.createElement("button");
 let cartbtntext = document.createTextNode(" Comprar ");
 cartbtn.appendChild(cartbtntext);
@@ -159,10 +168,13 @@ function mostrarMensajeEnAlerta(mensaje, tipo, duracion) {
 
 cartbtn.addEventListener("click", () => {
   const productcart = JSON.parse(localStorage.getItem('cart')) || [];
+  const nombreLogueado = localStorage.getItem('nombreLogueado');
 
-  if (isProductInCart(product)) {
+  if (isProductInCart(product, nombreLogueado)) {
     mostrarMensajeEnAlerta("Este producto ya está en el carrito.", "warning", 2000);
   } else {
+    product.nombreCliente = nombreLogueado;
+
     productcart.push(product);
     localStorage.setItem('cart', JSON.stringify(productcart));
     mostrarMensajeEnAlerta("Agregando al Carrito", "success", 2000);
@@ -172,16 +184,15 @@ cartbtn.addEventListener("click", () => {
     }, 2000);
   }
 });
-function isProductInCart(product) {
+
+function isProductInCart(product, nombreLogueado) {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const productId = product.id;
-
   for (const item of cart) {
-    if (item.id === productId) {
-      return true; 
+    if (item.nombreCliente === nombreLogueado && item.id === productId) {
+      return true;
     }
   }
 
-  return false; 
+  return false;
 }
-
